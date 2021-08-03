@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon Jun 07 16:11:26 CEST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0179-e6d0-5e86-00001ee5e9f0 
+on database directory /home/wiredaemon/uebung6/customers with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5ffd2b27 
+Loaded from file:/home/wiredaemon/.gradle/caches/modules-2/files-2.1/org.apache.derby/derby/10.12.1.1/75070c744a8e52a7d17b8b476468580309d5cd09/derby-10.12.1.1.jar
+java.vendor=AdoptOpenJDK
+java.runtime.version=16.0.1+9
+user.dir=/home/wiredaemon/uebung6
+os.name=Linux
+os.arch=amd64
+os.version=5.4.0-74-lowlatency
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

@@ -1,0 +1,90 @@
+= Professionelle Softwareentwicklung: Übung 6
+:icons: font
+:icon-set: fa
+:source-highlighter: rouge
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:stem: latexmath
+endif::[]
+
+[quote,Rich Hickey]
+Simplicity is hard work. But, there's a huge payoff.
+
+== Tool der Woche: wttr.in
+
+Die Webanwendung wttr.in bietet eine einfache Möglichkeit die Temperatur für
+bestimmte Orte anzeigen zu lassen. Die Einfachheit dieser Anwendung ist guter
+Grund dafür sie nutzen zu wollen.
+
+Beispielaufrufe sieht so aus: `curl http://wttr.in/düsseldorf` (klappt auch im
+Browser) und liefert nette Ergebnisse.
+
+Es gibt auch eine Hand voll von Standardformatierungen, die verwendet werden
+können: 
+
+   λ curl http://wttr.in/düsseldorf?format=3
+   düsseldorf: ⛅️ +16°C
+
+Die Hilfe finden Sie hier: http://wttr.in/:help
+
+== Bendispostos Bällchenbude
+
+Im heutigen Projekt stellen wir Ihnen Bendispostos Bällchenbude vor.
+Diese Anwendung prüft alle sechs Stunden, ob es über 31°C ist und verschickt
+dann an alle Kund:innen eine E-Mail, damit sie zum Eis essen vorbeikommen.
+
+Es gibt schon Klassen zum Versenden von Mails, Erstellen einer Kund:innendatenbank
+sowie einer Abfrage, um die aktuelle Temperatur zu erfahren. Die Marketinglogik
+befindet sich in `MarketingApp`.
+
+Einige strukturelle Probleme haben sich hier eingeschlichen. Die Anwendung soll so umgeschrieben werden, dass die
+Abhängigkeiten lockerer sind und die Architektur grundlegend den SOLID Prinzipien genügt. Außerdem sollen Tests entwickelt werden.
+
+=== Aufgaben
+
+==== Analyse
+
+Zunächst ein paar Gedanken vorab:
+
+* Analysieren Sie die Anwendung und finden Sie strukturelle Probleme.
+** Wie hängen die Klassen zusammen? Ist das sinnvoll? Wie kann das gelöst werden?
+** Wie würden Sie hier nun Tests entwickeln?
+** Was müsste am Projekt alles verändert werden, wenn wir einen anderen Anbieter als GMail verwenden wollen?
+
+==== Dependency Injection
+
+Wie Sie in Ihrer Analyse festgestellt haben, sind die einzelnen Klassen hart miteinander verdrahtet, was es uns quasi nicht möglich macht Tests zu entwickeln (außer vielleicht mit einem Mocking-Framework). Daher wollen wir uns im ersten Schritt damit befassen diese Verdrahtung zu lockern.
+
+* Schauen Sie sich den Konstruktor in der Klasse `MarketingApp` an und schreiben Sie ihn so um, dass die Abhängigkeiten als Argumente übergeben werden.
+
+Das ist es schon grundlegend, was hinter Dependency Injection steckt 🎉
+
+==== Dependency Inversion
+
+In der Analyse haben Sie sicherlich ein paar Probleme festgestellt. Lösen Sie
+diese, indem Sie die Klassenabhängigkeiten mittels Dependency Inversion
+umkehren.
+
+Überlegen Sie sich folgende Szenarien:
+
+* Sie wollen einen alternativen Wetterdienst anbinden, um nicht von `wttr.in` abhängig zu sein.
+Der Code der `MarketingApp` soll aber unabhängig vom Provider funktionieren.
+* Zum Testen des Codes wollen wir einen eigenen Wetterdienst schreiben,
+welcher sich deterministisch so verhält, dass wir das Verhalten vorhersagen können.
+
+WARNING: Schreiben Sie die Anwendung mittels Dependency Inversion um,
+indem Sie die konkreten Klassen durch selbstgewählte Interfaces ersetzen.
+Nutzen Sie diese Interfaces dann in der Klasse `MarketingApp`.
+
+==== Testing
+
+Nutzen Sie die verbesserte Version des Projektes um Tests zu schreiben:
+
+* Schreiben Sie einen Test, welcher prüft, dass die Marketinganwendung keine E-Mails schreibt, wenn es zu kalt ist.
+** Erstellen Sie hierzu eine Test-Wetter-Klasse und eine Test-E-Mail-Klasse, mit denen Sie das Verhalten überprüfen können.
+* Schreiben Sie weitere Tests, die bei entsprechender Temperatur von über 31 Grad Mails verschickt (Tipp: Ihre Test-E-Mail-Klasse muss gegebenenfalls die Anzahl der zu verschickenden Mails zählen und als Zahl ausgeben.)

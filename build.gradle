@@ -1,0 +1,32 @@
+plugins {
+	id 'java'
+	id 'application'
+}
+
+group = 'de.hhu.propra1'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 11
+
+application {
+	mainClassName = 'de.hhu.propra1.marketing.baellchenbude.MarketingApp'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'javax.mail:mail:1.4'
+	implementation 'org.apache.derby:derby:10.12.1.1'
+    testImplementation 'org.assertj:assertj-core:3.11.1'
+	implementation 'com.google.code.gson:gson:2.8.7'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
