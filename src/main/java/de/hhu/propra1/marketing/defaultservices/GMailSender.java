@@ -5,7 +5,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class GMailSender {
+public class GMailSender implements IMailSender{
 
     /*
      * This is just a hack implementation!
@@ -26,6 +26,7 @@ public class GMailSender {
         return props;
     }
 
+    @Override
     public void sendMail(String kunde) {
         Session session = createSession();
         try {

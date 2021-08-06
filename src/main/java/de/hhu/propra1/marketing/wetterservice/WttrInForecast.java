@@ -1,4 +1,4 @@
-package de.hhu.propra1.marketing.defaultservices;
+package de.hhu.propra1.marketing.wetterservice;
 
 import com.google.gson.Gson;
 
@@ -7,25 +7,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 
-class CurrentCondition {
-    private Integer temp_C;
-
-    public int getTemperatureCelsius() {
-        return temp_C;
-    }
-}
-
-class WeatherData {
-    private List<CurrentCondition> current_condition;
-
-    public List<CurrentCondition> getCurrentCondition() {
-        return current_condition;
-    }
-}
-
-public class WttrInForecast {
+public class WttrInForecast implements IWeatherForecast {
 
     private static int getTemperature() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
@@ -37,6 +20,7 @@ public class WttrInForecast {
         return weatherData.getCurrentCondition().get(0).getTemperatureCelsius();
     }
 
+    @Override
     public int getCelsiusTemperature() {
         try {
             return getTemperature();
